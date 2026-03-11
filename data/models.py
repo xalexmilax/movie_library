@@ -65,14 +65,14 @@ class MovieCreate(BaseModel):
     """Model for creating a new movie"""
     title: str = Field(min_length=1, max_length=200)
     director: str = Field(min_length=1, max_length=100)
-    releaseyear: int = Field(ge=1888, le=2100)  # First movie was published in 1888
+    release_year: int = Field(ge=1888, le=2100)  # First movie was published in 1888
 
 
 class MovieUpdate(BaseModel):
     """Model for updating a movie"""
     title: str = Field(min_length=1, max_length=200)
     director: str = Field(min_length=1, max_length=100)
-    releaseyear: int = Field(ge=1888, le=2100)
+    release_year: int = Field(ge=1888, le=2100)
     rating: float = Field(ge=0.0, le=10.0)
 
 
@@ -81,8 +81,7 @@ class MovieResponse(BaseModel):
     id: int
     title: str
     director: str
-    releaseyear: int
+    release_year: int
     rating: float
     
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}  # Updated - no more warning

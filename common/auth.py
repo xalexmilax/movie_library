@@ -42,7 +42,11 @@ def create_access_token(data: dict):
 def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> User:
     """Get current authenticated user from JWT token."""
     if not credentials:
-        raise HTTPException(status_code=401, detail="Not authenticated")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
     
     token = credentials.credentials
     
@@ -51,17 +55,29 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
         user_id: int = payload.get("user_id")
         
         if not user_id:
-            raise HTTPException(status_code=401, detail="Invalid token payload")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid token payload",
+                headers={"WWW-Authenticate": "Bearer"}
+            )
         
         user = user_service._get_by_id_internal(user_id)
         
         if not user:
-            raise HTTPException(status_code=401, detail="User not found")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User not found",
+                headers={"WWW-Authenticate": "Bearer"}
+            )
         
         return user
         
     except JWTError:
-        raise HTTPException(status_code=401, detail="Invalid token")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
 
 
 async def get_optional_user(
@@ -91,11 +107,16 @@ async def get_optional_user(
 
 
 def get_current_admin(current_user: User = Depends(get_current_user)) -> User:
-    """Verify that current user is an Admin."""
-    # Since your users table doesn't have role_id, you'll need to add it
-    # For now, check if user is admin by username or add a role check
-    # Option 1: Check by username
-    if current_user.username != "admin":  # Temporary check
+    """
+    Verify that current user is an Admin.
+    
+    For now, we check if username is 'testadmin' or 'admin'.
+    In production, you should add a role_id column to users table.
+    """
+    # Check if user is admin by username (temporary solution)
+    admin_usernames = ["admin", "testadmin"]
+    
+    if current_user.username not in admin_usernames:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Admin privileges required"

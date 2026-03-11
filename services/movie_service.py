@@ -24,7 +24,7 @@ def _row_to_movie(row) -> MovieResponse:
         movie_id=movie_id,
         title=title,
         director=director,
-        releaseyear=release_year,
+        release_year=release_year,
         rating=rating if rating is not None else 0.0
     )
 
@@ -33,7 +33,7 @@ def _get_movie_by_id_internal(movie_id: int) -> MovieResponse | None:
     """Internal method to get movie by ID without raising exceptions."""
     rows = read_query(
         """
-        SELECT movie_id, title, director, releaseyear, rating
+        SELECT movie_id, title, director, release_year, rating
         FROM movies
         WHERE movie_id = ?
         """,
@@ -124,13 +124,13 @@ def create_movie(movie_data: MovieCreate) -> MovieResponse:
     # Insert movie with initial rating (0.0)
     movie_id = insert_query(
         """
-        INSERT INTO movies (title, director, releaseyear, rating)
+        INSERT INTO movies (title, director, release_year, rating)
         VALUES (?, ?, ?, ?)
         """,
         (
             movie_data.title,
             movie_data.director,
-            movie_data.releaseyear,
+            movie_data.release_year,
             0.0  # Initial rating, will be enriched in background
         )
     )
@@ -169,7 +169,7 @@ def get_all_movies(
         sort_by_rating: If True, sort by rating descending
     """
     query = """
-        SELECT movie_id, title, director, releaseyear, rating
+        SELECT movie_id, title, director, release_year, rating
         FROM movies
         WHERE 1=1
     """
@@ -203,13 +203,13 @@ def update_movie(movie_id: int, movie_data: MovieUpdate) -> MovieResponse:
     update_query(
         """
         UPDATE movies
-        SET title = ?, director = ?, releaseyear = ?, rating = ?
+        SET title = ?, director = ?, release_year = ?, rating = ?
         WHERE movie_id = ?
         """,
         (
             movie_data.title,
             movie_data.director,
-            movie_data.releaseyear,
+            movie_data.release_year,
             movie_data.rating,
             movie_id
         )

@@ -78,7 +78,7 @@ class MovieUpdate(BaseModel):
 
 class MovieResponse(BaseModel):
     """Model for movie response"""
-    id: int
+    movie_id: int
     title: str
     director: str
     release_year: int

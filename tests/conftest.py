@@ -127,7 +127,7 @@ def test_movie(clean_database):
     """Create a test movie in database"""
     movie_id = insert_query(
         """
-        INSERT INTO movies (title, director, releaseyear, rating)
+        INSERT INTO movies (title, director, release_year, rating)
         VALUES (?, ?, ?, ?)
         """,
         ("Test Movie 1", "Test Director", 2020, 8.5)
@@ -137,6 +137,6 @@ def test_movie(clean_database):
         "movie_id": movie_id,
         "title": "Test Movie 1",
         "director": "Test Director",
-        "releaseyear": 2020,
+        "release_year": 2020,
         "rating": 8.5
     }

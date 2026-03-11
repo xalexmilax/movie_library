@@ -97,7 +97,7 @@ class TestAuthEndpoints:
             json={
                 "title": "Test Admin Movie",
                 "director": "Test Director",
-                "releaseyear": 2020
+                "release_year": 2020
             }
         )
         
@@ -112,7 +112,7 @@ class TestAuthEndpoints:
             json={
                 "title": "Test User Movie",
                 "director": "Test Director",
-                "releaseyear": 2020
+                "release_year": 2020
             }
         )
         

@@ -16,7 +16,7 @@ class TestMovieEndpoints:
             json={
                 "title": "Test Inception",
                 "director": "Christopher Nolan",
-                "releaseyear": 2010
+                "release_year": 2010
             }
         )
         
@@ -25,7 +25,7 @@ class TestMovieEndpoints:
         assert data["message"] == "Movie created successfully. Rating enrichment in progress."
         assert data["data"]["title"] == "Test Inception"
         assert data["data"]["director"] == "Christopher Nolan"
-        assert data["data"]["releaseyear"] == 2010
+        assert data["data"]["release_year"] == 2010
         assert data["data"]["rating"] == 0.0  # Initial rating before enrichment
     
     
@@ -37,7 +37,7 @@ class TestMovieEndpoints:
             json={
                 "title": "Test Movie",
                 "director": "Test Director",
-                "releaseyear": 2020
+                "release_year": 2020
             }
         )
         
@@ -51,7 +51,7 @@ class TestMovieEndpoints:
             json={
                 "title": "Test Movie",
                 "director": "Test Director",
-                "releaseyear": 2020
+                "release_year": 2020
             }
         )
         
@@ -66,7 +66,7 @@ class TestMovieEndpoints:
             json={
                 "title": "Test Movie",
                 "director": "Test Director",
-                "releaseyear": 1800  # Too old
+                "release_year": 1800  # Too old
             }
         )
         
@@ -80,7 +80,7 @@ class TestMovieEndpoints:
             headers={"Authorization": f"Bearer {admin_token}"},
             json={
                 "title": "Test Movie"
-                # Missing director and releaseyear
+                # Missing director and release_year
             }
         )
         
@@ -182,7 +182,7 @@ class TestMovieEndpoints:
             json={
                 "title": "Test Movie Updated",
                 "director": "Updated Director",
-                "releaseyear": 2021,
+                "release_year": 2021,
                 "rating": 9.0
             }
         )
@@ -202,7 +202,7 @@ class TestMovieEndpoints:
             json={
                 "title": "Test Movie Updated",
                 "director": "Updated Director",
-                "releaseyear": 2021,
+                "release_year": 2021,
                 "rating": 9.0
             }
         )
@@ -218,7 +218,7 @@ class TestMovieEndpoints:
             json={
                 "title": "Test Movie",
                 "director": "Test Director",
-                "releaseyear": 2020,
+                "release_year": 2020,
                 "rating": 8.0
             }
         )
@@ -277,7 +277,7 @@ class TestMovieEndpoints:
             json={
                 "title": "Test The Godfather",
                 "director": "Francis Ford Coppola",
-                "releaseyear": 1972
+                "release_year": 1972
             }
         )
         
